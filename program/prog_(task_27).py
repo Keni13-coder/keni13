@@ -6,9 +6,9 @@ def nb_year(p0, percent, aug, p,):
     #     return count            
     # return count
      
-    # return i if p0>=p else nb_year(int(p0+p0*(percent/100)+aug), percent, aug, p, i+1)
-
-    return (0 if p0 >= p else 1 + nb_year(int(p0*(1+percent*.01)+aug), percent, aug, p))
+    # return 0 if p0>=p else 1 + nb_year(int(p0+p0*(percent/100)+aug), percent, aug, p,)
+    print(int(p0*(1+percent*.01)+aug))
+    return 0 if p0 >= p else 1 + nb_year(int(p0+p0*(percent/100)+aug), percent, aug, p)
 
 
 
