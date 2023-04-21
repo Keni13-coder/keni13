@@ -1,8 +1,8 @@
 from functools import reduce
 def tribonacci(signature, n):
     
-    return  tribonacci(signature[1:]+[sum(signature)],n-1) if n >0 else []
-print(tribonacci([1, 1, 1],10))
+    return signature[0::3]+ tribonacci( signature[1::]+[sum(signature)],n-1) if n >0 else []
+print(tribonacci([0, 0, 1],10))
 
         # test.assert_equals(tribonacci([1, 1, 1], 10), [1, 1, 1, 3, 5, 9, 17, 31, 57, 105])
         # test.assert_equals(tribonacci([0, 0, 1], 10), [0, 0, 1, 1, 2, 4, 7, 13, 24, 44])
