@@ -81,16 +81,26 @@ Input: 6 -> -20 30 -40 50 10 -10 Output: 2
 
 
 
+
 def task13(N,array):
-    z = [x for x,y in enumerate(array) if y > 0]
-    return z
+    count = 0
+    max_count = 0
+    z =[1 if x >0 else 0 for x in array]
+    for x in z:
+        if x > 0:
+            count +=1
+            if count > max_count:
+                max_count = count
+        else:
+            count = 0        
+
+    return  max_count
+
+
+print(task13(6,[20, 30, -40, 50, 10, -10]))
 
 
 
-print(task13(6,[-20, 30, -40, 50, 10, -10]))
-
-
-
-
+# [0, 1, 0, 1, 1, 0]
 
 
