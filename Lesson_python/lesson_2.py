@@ -17,11 +17,11 @@ Output: 120
 
 # print(fact(5))
 
-# #рекурсивный метод
+#рекурсивный метод
 # def facts(num):
-#     return  num * fact(num-1) if num != 0 else 1
+#     return  num * facts(num-1) if num != 0 else 1
 
-# print(facts(0))
+# print(facts(5))
 
 
 '''
@@ -30,10 +30,32 @@ Output: 120
 выведите число -1.
 Input: 5 Output: 6
 '''
-# def fib(num):
-#     return 1 if num in(1,2) else fib(num-1) + fib(num-2)
 
-# print(fib(5))
+'''
+from itertools import islice
+
+def fib(a=0, b=1):
+    yield a
+    while True:
+        yield b
+        a, b = b, a + b
+
+fibonacci_numbers = list(islice(fib(), 20))
+print(fibonacci_numbers)
+'''
+from math import sqrt
+def fibonacci(n):
+    arr = [0] * (n)
+    arr[1] = 1
+    for i in range(2, n):
+        arr[i] = arr[i - 1] + arr[i - 2]
+        # сделать обычный фиб с  добавление по условию x,y enumerate(array) array[y]<n
+    return arr
+
+print(fibonacci(5))
+
+fib = lambda n: fibonacci(n) if sqrt(5*(n**2)-4)%1 == 0 or sqrt(5*(n**2)+4)%1 == 0 else -1
+print(fib(5))
 
 # a = int(input('введите a: '))
 # f1 = 0
@@ -82,22 +104,22 @@ Input: 6 -> -20 30 -40 50 10 -10 Output: 2
 
 
 
-def task13(N,array):
-    count = 0
-    max_count = 0
-    z =[1 if x >0 else 0 for x in array]
-    for x in z:
-        if x > 0:
-            count +=1
-            if count > max_count:
-                max_count = count
-        else:
-            count = 0        
+# def task13(N,array):
+#     count = 0
+#     max_count = 0
+#     z =[1 if x >0 else 0 for x in array]
+#     for x in z:
+#         if x > 0:
+#             count +=1
+#             if count > max_count:
+#                 max_count = count
+#         else:
+#             count = 0        
 
-    return  max_count
+#     return  max_count
 
 
-print(task13(6,[20, 30, -40, 50, 10, -10]))
+# print(task13(6,[20, 30, -40, 50, 10, -10]))
 
 
 
