@@ -9,35 +9,41 @@ Output: a a_1 a_2 b c a_3 a_4 d c_1 d_1 d_2
 Для решения данной задачи используйте функцию
 .split()
 '''
-def task25(st):
+# def task25(st):
+#     stroka = st.split()
+#     result = {}
+#     for i in stroka:
+#         if i in result:
+#             print(f'{i}_{result[i]}', end=' ')
+#         else:
+#             print(i, end=' ')
+#         result[i] = result.get(i, 0) + 1
+#     return
+
+
+
+
+def my_task25(st):
+    d = {}
     array = []
-    new_array =[]
     for x in st.split():
-        if x not in array:
-            array.append(x)
+        if x in array:
+            array.append(f'{x}_{d[x]}')
         else:
-            if x not in new_array:
-                new_array.append(x)
-            else:
-                new_array.append(f'{x}_{array.count(x)}')
-                array.append(x)
-
-    return  new_array   
+            array.append(x)    
+        d[x] = d.get(x,0) + 1
+        print(d[x])
+    return ' '.join(array)
 
 
-'''
-stroka = input().split()
-result = {}
-for i in stroka:
-    if i in result:
-        print(f'{i}_{result[i]}', end=' ')
-    else:
-        print(i, end=' ')
-    result[i] = result.get(i, 0) + 1
-'''
+
+dd = {1: 44, 2: 33}
+dd['asd'] = dd.get('asd',0)
+print(f'Пример {dd}')
 
 
-print(task25('a a a b c a a d c d d'))
+print(my_task25('a a a b c a a d c d d'))
+# print(task25('a a a b c a a d c d d'))
 '''
 Задача №27. Решение в группах
 Пользователь вводит текст(строка). Словом считается
@@ -74,7 +80,6 @@ def task111(strs):
         # добавление множеста значение по 1 ключю
         d.setdefault(x[:2],[]).append(x)
     return d
-
 
 '''
 str = input().split(" ")

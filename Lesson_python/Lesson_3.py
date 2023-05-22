@@ -76,3 +76,12 @@ print(task21([{"V": "S001"}, {"V": "S002"}, {"VI": "S001"},
 Input: [0, -1, 5, 2, 3]
 Output: 2 (-1 < 5, 2 < 3)
 '''
+from itertools import groupby
+def tts(array):
+    print([list(y) for x,y in groupby([array[x] > array[x-1] if x != len(array) else array[x-1]> array[x-2] for x,y in enumerate(array,1)])])
+    return(max(map(len, [list(y) for x, y in groupby([array[x] > array[x-1] if x != len(array) else array[x-1]> array[x-2] for x,y in enumerate(array,1)])])))
+
+
+
+print(tts([0, -1, 5, 2, 3]))
+
