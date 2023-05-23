@@ -1,3 +1,4 @@
+import timeit
 '''
 Задача №25. Решение в группах
 Напишите программу, которая принимает на вход
@@ -74,12 +75,14 @@ Sample Output:
 
 '''
 
-def task111(strs):
-    d = {}
-    for x in strs.split():
-        # добавление множеста значение по 1 ключю
-        d.setdefault(x[:2],[]).append(x)
-    return d
+# def task112(strs):
+#     d = {}
+#     for x in strs.split():
+#         # добавление множеста значение по 1 ключю
+#         d.setdefault(x[:2],[]).append(x)
+#     return d
+
+
 
 '''
 str = input().split(" ")
@@ -100,5 +103,14 @@ for i in s:
 print(*sorted(d.items()))
 '''
 
+from itertools import groupby
+def task111(st): 
+    return ', '.join([f'{x , list(y)}' for x,y in groupby(sorted(st.split(), key=lambda x : x[:2]),lambda x : x[:2])])
 
-print(task111('+71234567890 +71234567854 +61234576890 +52134567890 +21235777890 +21234567110 +71232267890'))
+
+s = '+71234567890 +71234567854 +61234576890 +52134567890 +21235777890 +21234567110 +71232267890'
+print(task111(s))
+
+print(f'Затрачено {timeit.timeit(setup=task111(s)): .2f} секунд')
+
+
