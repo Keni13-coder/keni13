@@ -8,7 +8,7 @@
 
 def task24(count_list : list, number_list : int): # --> поиск суммы ягод 1 куста и 2 соседних
     if number_list < len(count_list):
-        return count_list[number_list-1] + count_list[number_list-2] + count_list[-1]
+        return count_list[number_list] + count_list[number_list-1] + count_list[-1]
     
     elif number_list == len(count_list):
         return  count_list[number_list-1] + count_list[number_list-2] + count_list[::-1][-1]
@@ -16,4 +16,4 @@ def task24(count_list : list, number_list : int): # --> поиск суммы я
     else:
         return 'Введённый номер не существует'
         
-print(task24([44,35,22,13],4))
+print(task24([44,35,22,13],1))
