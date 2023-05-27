@@ -80,19 +80,24 @@ Output: 4 3
 '''
 def task(array):
 
-    if len(array) <= 1:
-        print(array)
-        return array
-    
-    else:
-        print(array)
-        return task(array[1:]) + task(array[:1]) 
+    return array if len(array) <= 1 else task(array[1:]) + task(array[:1]) 
 
 print(task([3, 4, 5, 6]))
 
-"""
-4 5 6       5 6 
-5 6          6
-6
-
+""" 
+[3 4 5 6]
+Левая рекурсия
+1 шаг [4 5 6]
+      /     \
+    5 6       5
+2 шаг
+    6        5
+6 + 5 = [6 , 5] левая рекурсия от 4 5 6
+Правая рекурсия от  4 5 6
+1 шаг [4] 
+    4
+Полностью левая чать будет [6, 5] + [4] = [6, 5, 4]
+Правая чать
+[3]
+[6, 5, 4] + [3] = [6, 5, 4, 3]
 """
