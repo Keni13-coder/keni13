@@ -4,15 +4,15 @@
 """
 
 def task25(a,b):
-    if b == 1:
-        return  a * b 
+    if b <= 1:
+        return  abs(a * b) 
     
     else:
         return a * task25(a,b-1)
     
 
 
-print(task25(2,3))
+print(task25(2,-1))
 
 """
 2 * (2 * (3-1) * (2 * (3-2)))

@@ -58,7 +58,7 @@ Output: yes
 
 '''
 # def task35(n):
-#     if n == 0:
+#     if n in [0,1]:
 #         return 'No'
 #     return 'Yes' if  n % 1 == 0 and n % n == 0  else 'No'
 
@@ -79,7 +79,6 @@ Output: 4 3
 
 '''
 def task(array):
-
     return array if len(array) <= 1 else task(array[1:]) + task(array[:1]) 
 
 print(task([3, 4, 5, 6]))
@@ -101,3 +100,13 @@ print(task([3, 4, 5, 6]))
 [3]
 [6, 5, 4] + [3] = [6, 5, 4, 3]
 """
+
+# def f(n):
+#     if n == 0:
+#         return ''
+#     k = int(input())
+#     return f(n - 1) + f' {k}'
+
+
+# n = int(input())
+# print(f(n))
