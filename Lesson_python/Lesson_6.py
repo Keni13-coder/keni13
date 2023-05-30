@@ -9,11 +9,11 @@
 3 3 2 12
 (каждое число вводится с новой строки
 '''
-def task_k(first_array,second_array):
-    return [x for x in first_array if x not in second_array]
+# def task_k(first_array,second_array):
+#     return [x for x in first_array if x not in second_array]
 
 
-print(task_k([3,1, 3, 4, 2, 4, 12],[4, 15, 43, 1, 15, 1]))
+# print(task_k([3,1, 3, 4, 2, 4, 12],[4, 15, 43, 1, 15, 1]))
 
 
 '''
@@ -27,18 +27,22 @@ print(task_k([3,1, 3, 4, 2, 4, 12],[4, 15, 43, 1, 15, 1]))
 '''
 
 
-def task41(array):
-    new_array = []
-    for y ,x in enumerate(array,1):
-        if y != len(array) and y+1 !=len(array):
-            if array[y] > array[y-1] and array[y] > array[y+1]:
-                new_array.append(array[y])
-    return len(new_array)
+# def task41(array):
+#     new_array = []
+#     for y ,x in enumerate(array,1):
+#         if y != len(array) and y+1 !=len(array):
+#             if array[y] > array[y-1] and array[y] > array[y+1]:
+#                 new_array.append(array[y])
+#     return len(new_array)
 
 
+# print(task41([1, 5, 1, 5, 1]))
 
-# подумать как сделать через enumerate 
-print(task41([1, 5, 1, 5, 1]))
+# def task41(array):
+#     return len([x for x,y in enumerate(array,1) if array[x-1:x] < array[x:x+1] > array[x+1:x+2]])
+
+
+# print(task41([1, 5, 1, 5, 1, 1]))
 
 
 '''
@@ -50,6 +54,17 @@ print(task41([1, 5, 1, 5, 1]))
 10 минут
 
 '''
+def task45(k: int) -> set:
+    # Перебираем все числа до 300, для каждого числа находим его делители x % i, суммируем и делаем словарь, где ключ являеться числом, а значение сумма его делителей.
+    d = [{x :  sum([i for i in range(1,x) if x % i == 0])} for x in range(1,k)]
+    # Перебираем список словарей, в словарях делаем проверку значений не равные 0 и 1, меньше числа k и ключь не равен 1, получаем кортежи из пар, ключь - значение
+    s = [ i for x in d for i in x.items() if i[1] not in [0,1] and i[1] <= k and i[0] != i[1]]
+    # Перебираем список кортежей с проверкой, если перевёрнутый элемент есть в списке s
+    b = [x for x in s if x[::-1] in s]
+
+    return set([i for x in map(list,b) for i in x])
+    
+# print(task45(300))
 
 
 '''
@@ -59,5 +74,10 @@ print(task41([1, 5, 1, 5, 1]))
 1232 3 2
 15 минут
 
-
 '''
+from collections import Counter
+def task43(array):
+    return len([x for x,y in dict(Counter([sum(z) for z in set([(y,i) for x,y in enumerate(array) for i in array[1:]])])).items() if y > 1])
+
+
+print(task43([1, 2, 3, 2, 3]))
