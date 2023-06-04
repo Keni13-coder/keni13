@@ -133,12 +133,13 @@ Sample Output:
 '''
 import numpy as np
 def ttt1(N):
-    ls = []
-    first=0   
-    for x in range(N):
-        ls.append([1 if i == first else 0 for i,v in enumerate(range(N))])
-        first += 1
+    # ls = []
+    # first=0   
+    # for x in range(N):
+    #     ls.append([1 if i == first else 0 for i,v in enumerate(range(N))])
+    #     first += 1
 
-    return np.matrix(ls)
+    # return np.matrix(ls)
+    return np.matrix([[1 if i == j else 0 for j in range(N)] for i in range(N)])
 
 print(ttt1(4))
