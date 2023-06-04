@@ -43,6 +43,8 @@ name = None
 def start():
     global name
     name = input('Введите имя файла для работы справочника: ')
+    if name == 'exit':
+        pass
     return name
 def show_menu():
     print("\nВыберите необходимое действие:\n"
@@ -64,7 +66,8 @@ def show_menu():
           "3. Найти абонента по номеру телефона\n"
           "4. Добавить абонента в справочник\n"
           "5. Сохранить справочник в текстовом формате\n"
-          "6. Закончить работу")
+          "6. Удалить абонента\n"
+          "7. Изменение данных\n")
         choice = int(input('Введите номер действия: ').strip())
     return choice
 
@@ -116,6 +119,19 @@ def funk_5():
     second_name = input('Введите имя файла клона: ')
     with open(f'{second_name}.txt','w+',encoding='utf=8') as f: 
        return shutil.copy(f'{name}.txt',f'{second_name}.txt')
+    
+
+def funk_6():
+    one_flag = input('Введите имя абонента: ').strip()
+    two_flag = input('Введите фамилию абонента: ').strip()
+    with open(f'{name}.txt','r+',encoding='utf=8') as f:
+       d = f.readlines()
+    with open(f'{name}.txt','w+',encoding='utf=8') as f:   
+        for number,line in enumerate(d):
+            if one_flag not in line and two_flag not in line:
+                f.write(line)
+
+
 
 def all_functional(int):
     if int == 0:
@@ -136,7 +152,7 @@ def main():
     print('Приветствую вас в программе "Так себе код"')
     start()
     sh = 0
-    while sh < 6:
+    while sh < 8:
         sh = show_menu()
         all_functional(sh)
 
@@ -144,11 +160,13 @@ def main():
 
 
 
-try:
-    main()
+# try:
+#     main()
 
-except Exception as ex:
-    while ex:
-        print(f'{ex}')
-        main()        
-
+# except Exception as ex:
+#     while ex:
+#         print(f'{ex}')
+#         main()        
+start()
+# zero()
+funk_6()
