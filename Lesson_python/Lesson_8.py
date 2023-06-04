@@ -1,3 +1,4 @@
+import shutil
 '''
 Задача №49. Решение в группах
 Создать телефонный справочник с
@@ -38,6 +39,11 @@ try:
 
 
 '''
+name = None
+def start():
+    global name
+    name = input('Введите имя файла для работы справочника: ')
+    return name
 def show_menu():
     print("\nВыберите необходимое действие:\n"
           "0. Создать справочник\n"
@@ -45,51 +51,104 @@ def show_menu():
           "2. Найти абонента по фамилии\n"
           "3. Найти абонента по номеру телефона\n"
           "4. Добавить абонента в справочник\n"
+          "5. Клонировать справочник в текстовом формате\n"
+          "6. Закончить работу")
+    choice = int(input('Введите номер действия: ').strip())
+
+    while choice > 6:
+        print('Введенный номер не соответствует командам!!!')
+        print("\nВыберите необходимое действие:\n"
+          "0. Создать справочник\n"
+          "1. Отобразить весь справочник\n"
+          "2. Найти абонента по фамилии\n"
+          "3. Найти абонента по номеру телефона\n"
+          "4. Добавить абонента в справочник\n"
           "5. Сохранить справочник в текстовом формате\n"
           "6. Закончить работу")
-    choice = int(input('Введите номер действия: '))
-    
+        choice = int(input('Введите номер действия: ').strip())
     return choice
 
 
 def zero():
-    name = input("Введите название файла: ")
+
     with open(f'{name}.txt','w+',encoding='utf=8') as f:
         f.write('Мой справочник:\n')
-        return f
+        print(f' Файл и именем {name}.txt успешно создан !')
 
 
-def funk_1(name: str):
-    with open(name,'r',encoding='utf=8') as n:
-        [print(x,end='') for x in n ] 
+
+def funk_1():
+    with open(f'{name}.txt','r',encoding='utf=8') as n:
+        [print(x,end='') for x in n ]
+
 
 # funk_1('file.txt')
 # show_menu()
-def funk_2(name: str):
-    cursor = input('Введите фамилию: ')
-    with open(name,'r+',encoding='utf=8') as f:
+def funk_2():
+    cursor = input('Введите фамилию: ').strip()
+    with open(f'{name}.txt','r+',encoding='utf=8') as f:
         [ print(x[:-1]) if  '\n' in x else print(x) for x in f if cursor.casefold() in x.casefold()]
+
     
 # funk_2('file.txt')
 
-def funk_3(name: str):
-    cursor = input('Введите телефон: ')
-    with open(name,'r+',encoding='utf=8') as f:
+def funk_3():
+    cursor = input('Введите телефон: ').strip()
+    with open(f'{name}.txt','r+',encoding='utf=8') as f:
         [ print(x[:-1]) if  '\n' in x else print(x) for x in f if cursor.casefold() in x.casefold()]
+
 
 # funk_3('file.txt')
 
 
-def funk_4(name: str):
-    with open(name,'a+',encoding='utf=8') as f:
+def funk_4():
+    with open(f'{name}.txt','a+',encoding='utf=8') as f:
         
-        first_name = input('Введите Имя: ')
-        second_name = input('Введите Фамилию: ')
-        three_name = input('Введите Отчество: ')
-        number_name = input('Введите номер: ')
+        first_name = input('Введите Имя: ').strip()
+        second_name = input('Введите Фамилию: ').strip()
+        three_name = input('Введите Отчество: ').strip()
+        number_name = input('Введите номер: ').strip()
         ls = [first_name,second_name,three_name,number_name] 
         [f.write(f'{x}\n') if x == number_name else f.write(f'{x}, ') for x in ls]
         print('Запись добавлена')
+        
+def funk_5():
+    second_name = input('Введите имя файла клона: ')
+    with open(f'{second_name}.txt','w+',encoding='utf=8') as f: 
+       return shutil.copy(f'{name}.txt',f'{second_name}.txt')
 
-# zero()
-funk_4('file.txt')
+def all_functional(int):
+    if int == 0:
+        return zero()
+    elif int == 1:
+        return funk_1()
+    elif int == 2:
+        return funk_2()
+    elif int == 3:
+        return funk_3()    
+    elif int == 4 :
+        return funk_4()
+    elif int == 5 :
+        return funk_5()
+
+
+def main():
+    print('Приветствую вас в программе "Так себе код"')
+    start()
+    sh = 0
+    while sh < 6:
+        sh = show_menu()
+        all_functional(sh)
+
+    print('Завершение программы.')
+
+
+
+try:
+    main()
+
+except Exception as ex:
+    while ex:
+        print(f'{ex}')
+        main()        
+
