@@ -40,15 +40,36 @@ try:
 
 '''
 name = None
+def zero():
+
+    with open(f'{name}.txt','w+',encoding='utf=8') as f:
+        f.write('Мой справочник:\n')
+        print(f' Файл и именем {name}.txt успешно создан !')
+
 def start():
     global name
-    name = input('Введите имя текстового файла  для работы справочника или exit для выхода: ')
-    if name == 'exit':
-        return "exit"
-    return name
+    print('1. Создать файл\n'
+          '2. Открыть существующий\n'
+          '3. Выйти')
+    comand = int(input('Введите номер команды: '))
+    while comand > 3:
+        print('1. Создать файл\n'
+          '2. Открыть существующий\n'
+          '3. Выйти')
+        if comand == 3:
+            return 'exit'
+        elif comand == 1:
+            name = input('Введите имя текстового файла для создание или exit для выхода: ')
+            if name == 'exit':
+                return "exit"
+            zero()    
+        elif comand ==  2:   
+            name = input('Введите имя текстового файла  для работы справочника или exit для выхода: ')
+            if name == 'exit':
+                return "exit"
+        return name
 def show_menu():
     print("\nВыберите необходимое действие:\n"
-          "0. Создать справочник\n"
           "1. Отобразить весь справочник\n"
           "2. Найти абонента по фамилии\n"
           "3. Найти абонента по номеру телефона\n"
@@ -62,7 +83,6 @@ def show_menu():
     while choice > 8:
         print('Введенный номер не соответствует командам!!!')
         print("\nВыберите необходимое действие:\n"
-          "0. Создать справочник\n"
           "1. Отобразить весь справочник\n"
           "2. Найти абонента по фамилии\n"
           "3. Найти абонента по номеру телефона\n"
@@ -74,15 +94,6 @@ def show_menu():
         
         choice = int(input('Введите номер действия: ').strip())
     return choice
-
-
-def zero():
-
-    with open(f'{name}.txt','w+',encoding='utf=8') as f:
-        f.write('Мой справочник:\n')
-        print(f' Файл и именем {name}.txt успешно создан !')
-
-
 
 def funk_1():
     with open(f'{name}.txt','r',encoding='utf=8') as n:
@@ -207,9 +218,7 @@ def funk_7():
                         
                 
 def all_functional(int):
-    if int == 0:
-        return zero()
-    elif int == 1:
+    if int == 1:
         return funk_1()
     elif int == 2:
         return funk_2()
@@ -233,9 +242,11 @@ def main():
     else:    
         sh = 0
         while sh < 8:
-            sh = show_menu()
-            all_functional(sh)
-
+            try:
+                sh = show_menu()
+                all_functional(sh)
+            except Exception as es:
+                print(f'Ошибка {es}, попробуте ещё')
         print('Завершение программы.')
 
 
