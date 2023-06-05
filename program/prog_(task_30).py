@@ -22,3 +22,4 @@ def ordersss(sentence):
 
 
 print(ordersss("4of Fo1r pe6ople goo0d th5e the2"))
+print(sorted("Fo1r"))

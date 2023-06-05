@@ -64,15 +64,15 @@ def task45(k: int) -> set:
     b = [x for x in s if x[::-1] in s]
     return [y for x,y in enumerate(b) if b[x] == tuple(i for z in b[x+1:x+2] for i in z)[::-1]]
 
-print(timeit.timeit(lambda: task45(100000),number=1)) # явно быстрей работает
-# print(task45(100000)) # явно быстрей работает
+# print(timeit.timeit(lambda: task45(100000),number=1)) # явно быстрей работает
+print(task45(3000)) # явно быстрей работает
 
 
 def task45(k: int) -> set:
     option = [x for x in range(1 ,k) if x >= 10 and (d := sum([i for i in range(1,x) if x % i == 0])) != x == sum([z for z in range(1,d) if d % z == 0 ])]  
     return option
 
-# print(task45(3000))
+print(task45(3000))
 # print(timeit.timeit(lambda: task45(30000),number=1))
 
 '''
