@@ -44,37 +44,60 @@ def zero():
 
     with open(f'{name}.txt','w+',encoding='utf=8') as f:
         f.write('Мой справочник:\n')
-        print(f' Файл и именем {name}.txt успешно создан !')
+        print(f' Файл с именем {name}.txt успешно создан !')
 
 def start():
     global name
-    print('1. Создать файл\n'
-          '2. Открыть существующий\n'
+    print('1. Создать текстовый файл\n'
+          '2. Открыть существующий текстовый файл\n'
           '3. Выйти')
-    comand = int(input('Введите номер команды: '))
+    comand = input('Введите номер команды: ')
+    if not comand.isdigit():
+        print(f'Введены не коректные символы "{comand}"')
+        return 'exit'
+    comand = int(comand)
+    if comand == 3:
+        return 'exit'
+    elif comand == 1:
+        name = input('Введите имя текстового файла для создание или exit для выхода: ')
+        if name == 'exit':
+            return "exit"
+        zero()    
+    elif comand ==  2:   
+        name = input('Введите имя текстового файла  для работы справочника или exit для выхода: ')
+        if name == 'exit':
+            return "exit"
     while comand > 3:
-        print('1. Создать файл\n'
-          '2. Открыть существующий\n'
+        print('1. Создать текстовый файл\n'
+          '2. Открыть существующий текстовый файл\n'
           '3. Выйти')
+        comand = input('Введите номер команды: ')
+        if not comand.isdigit():
+            print(f'Введены не коректные символы "{comand}"')
+            return 'exit'
+        comand = int(comand)
         if comand == 3:
             return 'exit'
         elif comand == 1:
             name = input('Введите имя текстового файла для создание или exit для выхода: ')
             if name == 'exit':
                 return "exit"
-            zero()    
+            zero()
+            return name    
         elif comand ==  2:   
             name = input('Введите имя текстового файла  для работы справочника или exit для выхода: ')
             if name == 'exit':
                 return "exit"
-        return name
+            return name
+
 def show_menu():
     print("\nВыберите необходимое действие:\n"
+          "0. Подняться выше по меню\n"
           "1. Отобразить весь справочник\n"
           "2. Найти абонента по фамилии\n"
           "3. Найти абонента по номеру телефона\n"
           "4. Добавить абонента в справочник\n"
-          "5. Сохранить справочник в текстовом формате\n"
+          "5. Копировать справочник в текстовом формате\n"
           "6. Удалить абонента\n"
           "7. Изменение данных\n"
           "8. Завершить работу\n")
@@ -83,16 +106,18 @@ def show_menu():
     while choice > 8:
         print('Введенный номер не соответствует командам!!!')
         print("\nВыберите необходимое действие:\n"
+          "0. Подняться выше по меню\n"
           "1. Отобразить весь справочник\n"
           "2. Найти абонента по фамилии\n"
           "3. Найти абонента по номеру телефона\n"
           "4. Добавить абонента в справочник\n"
-          "5. Сохранить справочник в текстовом формате\n"
+          "5. Копировать справочник в текстовом формате\n"
           "6. Удалить абонента\n"
           "7. Изменение данных\n"
           "8. Завершить работу\n")
         
         choice = int(input('Введите номер действия: ').strip())
+
     return choice
 
 def funk_1():
@@ -201,6 +226,10 @@ def funk_7():
         for numbers ,search in enumerate(d,1):
             if first_names in search:
                 print(f'{numbers}: {search}',end='') if numbers != len(d) else print(f'{numbers}: {search}',end='\n')
+            
+            elif first_names not in search:
+                print('Данной записи не существует')
+                return show_menu()    
         num = int(input("Введите номер позиции заменяемой строки: "))
         while num > 4:
             print('Введенный номер не существует!!!')
@@ -218,7 +247,9 @@ def funk_7():
                         
                 
 def all_functional(int):
-    if int == 1:
+    if int == 0:
+        return start()
+    elif int == 1:
         return funk_1()
     elif int == 2:
         return funk_2()
