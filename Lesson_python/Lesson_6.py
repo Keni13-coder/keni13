@@ -56,24 +56,26 @@ import timeit
 
 '''
 def task45(k: int) -> set:
+    print('Старт программы')
     # Перебираем все числа до 300, для каждого числа находим его делители x % i, суммируем и делаем словарь, где ключ являеться числом, а значение сумма его делителей.
-    d = [{x :  sum([i for i in range(1,x) if x % i == 0])} for x in range(2,k) if k % 2 == 0]  
+    d = ({x :  sum((i for i in range(1,x) if x % i == 0))} for x in range(2,k) if k % 2 == 0)  
     # Перебираем список словарей, в словарях делаем проверку значений не равные 0 и 1, меньше числа k и ключь не равен 1, получаем кортежи из пар, ключь - значение
-    s = [ i for x in d for i in x.items() if i[1] not in [0,1] and i[1] <= k and i[0] != i[1]]
+    s = ( i for x in d for i in x.items() if i[1] not in [0,1] and i[1] <= k and i[0] != i[1])
     # Перебираем список кортежей с проверкой, если перевёрнутый элемент есть в списке s
-    b = [x for x in s if x[::-1] in s]
+    b = (x for x in s if x[::-1] in s)
     return [y for x,y in enumerate(b) if b[x] == tuple(i for z in b[x+1:x+2] for i in z)[::-1]]
 
 # print(timeit.timeit(lambda: task45(100000),number=1)) # явно быстрей работает
-print(task45(3000)) # явно быстрей работает
+# print(task45(3000)) # явно быстрей работает
 
 
 def task45(k: int) -> set:
-    option = [x for x in range(1 ,k) if x >= 10 and (d := sum([i for i in range(1,x) if x % i == 0])) != x == sum([z for z in range(1,d) if d % z == 0 ])]  
+    print('start')
+    option = [x for x in range(1 ,k) if x >= 10 and (d := sum((i for i in range(1,x) if x % i == 0))) != x == sum((z for z in range(1,d) if d % z == 0 ))]  
     return option
 
-print(task45(3000))
-# print(timeit.timeit(lambda: task45(30000),number=1))
+# print(task45(3000))
+print(timeit.timeit(lambda: task45(100000),number=1))
 
 '''
 Решение в группах
@@ -88,4 +90,4 @@ def task43(array):
     return len([x for x,y in dict(Counter([sum(z) for z in set([(y,i) for x,y in enumerate(array) for i in array[1:]])])).items() if y > 1])
 
 
-print(task43([1, 2, 3, 2, 3]))
+# print(task43([1, 2, 3, 2, 3]))

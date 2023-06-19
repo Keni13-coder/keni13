@@ -436,6 +436,36 @@ Examples: (Input --> Output)
 
 
 
+Task 44 
+Mr. Scrooge has a sum of money 'P' that he wants to invest. Before he does, he wants to know how many years 'Y' this sum 'P' has to be kept in the bank in order for it to amount to a desired sum of money 'D'.
+
+The sum is kept for 'Y' years in the bank where interest 'I' is paid yearly. After paying taxes 'T' for the year the new sum is re-invested.
+
+Note to Tax: not the invested principal is taxed, but only the year's accrued interest
+
+Example:
+
+  Let P be the Principal = 1000.00      
+  Let I be the Interest Rate = 0.05      
+  Let T be the Tax Rate = 0.18      
+  Let D be the Desired Sum = 1100.00
+
+
+After 1st Year -->
+  P = 1041.00
+After 2nd Year -->
+  P = 1083.86
+After 3rd Year -->
+  P = 1128.30
+Thus Mr. Scrooge has to wait for 3 years for the initial principal to amount to the desired sum.
+
+Your task is to complete the method provided and return the number of years 'Y' as a whole in order for Mr. Scrooge to get the desired sum.
+
+Assumption: Assume that Desired Principal 'D' is always greater than the initial principal. However it is best to take into consideration that if Desired Principal 'D' is equal to Principal 'P' this should return 0 Years.
+
+
+
+
                                       6 kyu
 
 
@@ -531,6 +561,60 @@ If you enjoyed this kata more advanced and generalized version of it can be foun
 
 
 
+
+Task 43 
+
+A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
+
+Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
+
+
+Task 45
+
+
+In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up. 
+Rules
+ 1.  The input string will always be lower case but maybe empty.
+
+ 2.  If the character in the string is whitespace then pass over it as if it was an empty seat
+Example
+wave("hello") => ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
+
+
+Task 46 
+
+
+You live in the city of Cartesia where all roads are laid out in a perfect grid. You arrived ten minutes too early to an appointment, so you decided to take the opportunity to go for a short walk. The city provides its citizens with a Walk Generating App on their phones -- everytime you press the button it sends you an array of one-letter strings representing directions to walk (eg. ['n', 's', 'w', 'e']). You always walk only a single block for each letter (direction) and you know it takes you one minute to traverse one city block, so create a function that will return true if the walk the app gives you will take you exactly ten minutes (you don't want to be early or late!) and will, of course, return you to your starting point. Return false otherwise.
+
+Note: you will always receive a valid array containing a random assortment of direction letters ('n', 's', 'e', or 'w' only). It will never give you an empty array (that's not a walk, that's standing still!).
+
+
+
+Task 47
+
+
+Given two arrays a and b write a function comp(a, b) (orcompSame(a, b)) that checks whether the two arrays have the "same" elements, with the same multiplicities (the multiplicity of a member is the number of times it appears). "Same" means, here, that the elements in b are the elements in a squared, regardless of the order.
+
+Examples
+Valid arrays
+a = [121, 144, 19, 161, 19, 144, 19, 11]  
+b = [121, 14641, 20736, 361, 25921, 361, 20736, 361]
+
+
+
+
+Task 49
+
+Write a function, persistence, that takes in a positive parameter num and returns its multiplicative persistence, which is the number of times you must multiply the digits in num until you reach a single digit.
+
+For example (Input --> Output):
+
+39 --> 3 (because 3*9 = 27, 2*7 = 14, 1*4 = 4 and 4 has only one digit)
+999 --> 4 (because 9*9*9 = 729, 7*2*9 = 126, 1*2*6 = 12, and finally 1*2 = 2)
+4 --> 0 (because 4 is already a one-digit number)
+
+
+
                                              Kyu 5
 
 
@@ -561,6 +645,52 @@ The most outer function represents the left operand, the most inner function rep
 Division should be integer division. For example, this should return 2, not 2.666666...:
 eight(divided_by(three()))
 
+
+
+
+
+Task 48 
+The Fibonacci numbers are the numbers in the following integer sequence (Fn):
+
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, ...
+
+such as
+
+F(n) = F(n-1) + F(n-2) with F(0) = 0 and F(1) = 1.
+
+Given a number, say prod (for product), we search two Fibonacci numbers F(n) and F(n+1) verifying
+
+F(n) * F(n+1) = prod.
+
+Your function productFib takes an integer (prod) and returns an array:
+
+[F(n), F(n+1), true] or {F(n), F(n+1), 1} or (F(n), F(n+1), True)
+depending on the language if F(n) * F(n+1) = prod.
+
+If you don't find two consecutive F(n) verifying F(n) * F(n+1) = prodyou will return
+
+[F(n), F(n+1), false] or {F(n), F(n+1), 0} or (F(n), F(n+1), False)
+F(n) being the smallest one such as F(n) * F(n+1) > prod.
+
+Some Examples of Return:
+(depend on the language)
+
+productFib(714) # should return (21, 34, true), 
+                # since F(8) = 21, F(9) = 34 and 714 = 21 * 34
+
+productFib(800) # should return (34, 55, false), 
+                # since F(8) = 21, F(9) = 34, F(10) = 55 and 21 * 34 < 800 < 34 * 55
+-----
+productFib(714) # should return [21, 34, true], 
+productFib(800) # should return [34, 55, false], 
+-----
+productFib(714) # should return {21, 34, 1}, 
+productFib(800) # should return {34, 55, 0},        
+-----
+productFib(714) # should return {21, 34, true}, 
+productFib(800) # should return {34, 55, false}, 
+Note:
+You can see examples for your language in "Sample Tests".
 
 
 
