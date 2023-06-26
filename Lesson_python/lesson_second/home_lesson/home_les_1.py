@@ -18,8 +18,6 @@ def t_3(n=input("Введите число от 1 до 999: ")):
 
     
 print(t_3())
-
-
 "Задание 8"
 def test(N):
     return [print('_' * (N-i) + '*' * (i+i+1)+ '_' * (N-i)) if i % 2 != 0 else print('_' * (N-i) + 'o' * (i+i+1)+ '_' * (N-i))  for i in range(N)]

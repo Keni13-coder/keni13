@@ -615,6 +615,22 @@ For example (Input --> Output):
 
 
 
+
+Task 51  
+
+
+Implement the function unique_in_order which takes as argument a sequence and returns a list of items without any elements with the same value next to each other and preserving the original order of elements.
+
+For example:
+
+unique_in_order('AAAABBBCCDAABBB') == ['A', 'B', 'C', 'D', 'A', 'B']
+unique_in_order('ABBCcAD')         == ['A', 'B', 'C', 'c', 'A', 'D']
+unique_in_order([1, 2, 2, 3, 3])   == [1, 2, 3]
+unique_in_order((1, 2, 2, 3, 3))   == [1, 2, 3]
+
+
+
+
                                              Kyu 5
 
 
@@ -694,6 +710,19 @@ You can see examples for your language in "Sample Tests".
 
 
 
+
+Task 52
+
+
+ROT13 is a simple letter substitution cipher that replaces a letter with the letter 13 letters after it in the alphabet. ROT13 is an example of the Caesar cipher.
+
+Create a function that takes a string and returns the string ciphered with Rot13. If there are numbers or special characters included in the string, they should be returned as they are. Only letters from the latin/english alphabet should be shifted, like in the original Rot13 "implementation".
+
+Please note that using encode is considered cheating.
+
+
+
+
                                      Kyu 4 ?
 
 
@@ -718,3 +747,15 @@ This image will illustrate things more clearly:
 NOTE: The idea is not sort the elements from the lowest value to the highest; the idea is to traverse the 2-d array in a clockwise snailshell pattern.
 
 NOTE 2: The 0x0 (empty matrix) is represented as en empty array inside an array [[]].                                     
+
+
+Task 50
+
+
+A format for expressing an ordered list of integers is to use a comma separated list of either
+
+individual integers
+or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example "12,13,15-17"
+Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
+solution([-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20])
+# returns "-10--8,-6,-3-1,3-5,7-11,14,15,17-20"
