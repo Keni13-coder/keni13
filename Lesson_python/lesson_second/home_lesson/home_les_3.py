@@ -35,7 +35,7 @@ def task_2(st):
     st = sorted(st,key=st.get)[::-1]
     return st[0:10]
 
-# print(task_2(st))
+print(task_2(st))
 
 
 
@@ -81,14 +81,39 @@ print(task_3(dit,56))
 
 
 
-# print([x for x in combinations(dit.values(),4)]) 
-lis = []           
-for i,v in enumerate(list(dit.values())):
-    lis.extend([x for x in combinations(dit.values(),len(dit.values())-i)])    
-lis = [x for x in lis if sum(x)<=36]
-last = [list(map(lambda z:tuple(k for k,v in dit.items() if dit[k]==z) ,x)) for x in lis]    
-last = [sum(x,()) for x in last]    
-# print(last)    
+'''
+Три друга взяли вещи в поход. Сформируйте 
+словарь, где ключ — имя друга, а значение —
+кортеж вещей. Ответьте на вопросы:
+✔ Какие вещи взяли все три друга
+✔ Какие вещи уникальны, есть только у одного друга
+✔ Какие вещи есть у всех друзей кроме одного 
+и имя того, у кого данная вещь отсутствует
+✔ Для решения используйте операции 
+с множествами. Код должен расширяться 
+на любое большее количество друзей
 
-# rr = [('палатка',), ('вода',), ('еда',)]
-# print(sum(rr,()))
+'''
+
+
+dit = {'миша':('веревка',"еда","вода"),
+       'паша':("еда","вода","палатка"),
+       'саша':("еда","вода","текила"),
+       'маша':("еда","вода","веревка"),}
+
+def question_1(d:dict)-> None:
+    lis = list(map(set,d.values()))
+    print(f'Есть у всех : {set.intersection(*lis)}')
+    print(f'{set.difference(*lis) if set.difference(*lis) else set.difference(*lis[::-1])}')
+    '''
+    Не получаеться понять как сделать с помощью методов set,при измене вещей всё идёт крахом и выводы не верные
+    '''
+
+    
+    
+        
+
+    
+print(question_1(dit))   
+
+
