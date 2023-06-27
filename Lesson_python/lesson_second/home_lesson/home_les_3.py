@@ -72,10 +72,8 @@ def task_3(d:dict,num:int)->list:
 # print(task_3(dit,36))  
 
 
-from itertools import groupby
-ar = [1,2,3,4]
 
-d=[[x,i]for x in ar for i in ar[1:]]
-l = [tuple(v) for i,v in groupby(d,key=lambda x: x[0])]
 
-print(l)            
+
+
+                       
