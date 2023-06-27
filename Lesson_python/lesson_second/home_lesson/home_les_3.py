@@ -1,3 +1,4 @@
+from itertools import combinations
 '''
 Дан список повторяющихся элементов. Вернуть список 
 с дублирующимися элементами. В результирующем списке 
@@ -56,26 +57,38 @@ dit = {'гири': 25,
 
 
 def task_3(d:dict,num:int)->list:
-    lis =[]
-    for k,v in d.items():
-        for j,i in d.items():
-            if num - v - i >=0:
-                lis.append((k,j))
-    last_list = []
-    for i,v in enumerate(lis):
-        if v[::-1] in lis and v[::-1] not in last_list:
-            last_list.append(v)
-    return  last_list 
+    # lis =[]
+    # for k,v in d.items():
+    #     for j,i in d.items():
+    #         if num - v - i >=0:
+    #             lis.append((k,j))
+    # last_list = []
+    # for i,v in enumerate(lis):
+    #     if v[::-1] in lis and v[::-1] not in last_list:
+    #         last_list.append(v)
+    # return  last_list
+    lis = []           
+    for i,v in enumerate(list(d.values())):
+        lis.extend([x for x in combinations(d.values(),len(d.values())-i)])    
+    lis = [x for x in lis if sum(x)<=num]
+    last = [list(map(lambda z:tuple(k for k,v in d.items() if d[k]==z) ,x)) for x in lis]    
+    last = [sum(x,()) for x in last]
+    return last
 
-# не знаю как сделать со всеми, могу только по 2 варианта
-
-# print(task_3(dit,36))  
 
 
-from itertools import groupby
-ar = [1,2,3,4]
+print(task_3(dit,56))  
 
-d=[[x,i]for x in ar for i in ar[1:]]
-l = [tuple(v) for i,v in groupby(d,key=lambda x: x[0])]
 
-print(l)            
+
+# print([x for x in combinations(dit.values(),4)]) 
+lis = []           
+for i,v in enumerate(list(dit.values())):
+    lis.extend([x for x in combinations(dit.values(),len(dit.values())-i)])    
+lis = [x for x in lis if sum(x)<=36]
+last = [list(map(lambda z:tuple(k for k,v in dit.items() if dit[k]==z) ,x)) for x in lis]    
+last = [sum(x,()) for x in last]    
+# print(last)    
+
+# rr = [('палатка',), ('вода',), ('еда',)]
+# print(sum(rr,()))
