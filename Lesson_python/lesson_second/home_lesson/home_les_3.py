@@ -31,7 +31,7 @@ Python - это простой в освоении и мощный язык пр
 '''
 def task_2(st:str)->list[str]:
     st = st.split()
-    st = {x:st.count(x) for x in st}
+    st = {x:st.count(x) for x in st if x not in [' ',',']}
     st = sorted(st,key=st.get)[::-1]
     return st[0:10]
 
@@ -108,12 +108,6 @@ def question_1(d:dict)-> None:
     '''
     Не получаеться понять как сделать с помощью методов set,при измене вещей всё идёт крахом и выводы не верные
     '''
-
-    
-    
-        
-
-    
 print(question_1(dit))   
 
 
