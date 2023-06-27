@@ -29,7 +29,7 @@ Python - это простой в освоении и мощный язык пр
 
 Это руководство неофициально знакомит читателя с основными концепциями и функциями языка и системы Python. Для практического использования полезно иметь под рукой интерпретатор Python, но все примеры являются автономными, поэтому руководство также можно прочитать в автономном режиме.
 '''
-def task_2(st):
+def task_2(st:str)->list[str]:
     st = st.split()
     st = {x:st.count(x) for x in st}
     st = sorted(st,key=st.get)[::-1]
@@ -56,7 +56,7 @@ dit = {'гири': 25,
 
 
 
-def task_3(d:dict,num:int)->list:
+def task_3(d:dict,num:int)->list[tuple]:
     # lis =[]
     # for k,v in d.items():
     #     for j,i in d.items():
