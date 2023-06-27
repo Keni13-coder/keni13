@@ -1,3 +1,4 @@
+from itertools import combinations
 '''
 Дан список повторяющихся элементов. Вернуть список 
 с дублирующимися элементами. В результирующем списке 
@@ -28,13 +29,13 @@ Python - это простой в освоении и мощный язык пр
 
 Это руководство неофициально знакомит читателя с основными концепциями и функциями языка и системы Python. Для практического использования полезно иметь под рукой интерпретатор Python, но все примеры являются автономными, поэтому руководство также можно прочитать в автономном режиме.
 '''
-def task_2(st):
+def task_2(st:str)->list[str]:
     st = st.split()
     st = {x:st.count(x) for x in st}
     st = sorted(st,key=st.get)[::-1]
     return st[0:10]
 
-# print(task_2(st))
+print(task_2(st))
 
 
 
@@ -55,25 +56,64 @@ dit = {'гири': 25,
 
 
 
-def task_3(d:dict,num:int)->list:
-    lis =[]
-    for k,v in d.items():
-        for j,i in d.items():
-            if num - v - i >=0:
-                lis.append((k,j))
-    last_list = []
-    for i,v in enumerate(lis):
-        if v[::-1] in lis and v[::-1] not in last_list:
-            last_list.append(v)
-    return  last_list 
+def task_3(d:dict,num:int)->list[tuple]:
+    # lis =[]
+    # for k,v in d.items():
+    #     for j,i in d.items():
+    #         if num - v - i >=0:
+    #             lis.append((k,j))
+    # last_list = []
+    # for i,v in enumerate(lis):
+    #     if v[::-1] in lis and v[::-1] not in last_list:
+    #         last_list.append(v)
+    # return  last_list
+    lis = []           
+    for i,v in enumerate(list(d.values())):
+        lis.extend([x for x in combinations(d.values(),len(d.values())-i)])    
+    lis = [x for x in lis if sum(x)<=num]
+    last = [list(map(lambda z:tuple(k for k,v in d.items() if d[k]==z) ,x)) for x in lis]    
+    last = [sum(x,()) for x in last]
+    return last
 
-# не знаю как сделать со всеми, могу только по 2 варианта
-
-# print(task_3(dit,36))  
 
 
+print(task_3(dit,56))  
 
 
 
+'''
+Три друга взяли вещи в поход. Сформируйте 
+словарь, где ключ — имя друга, а значение —
+кортеж вещей. Ответьте на вопросы:
+✔ Какие вещи взяли все три друга
+✔ Какие вещи уникальны, есть только у одного друга
+✔ Какие вещи есть у всех друзей кроме одного 
+и имя того, у кого данная вещь отсутствует
+✔ Для решения используйте операции 
+с множествами. Код должен расширяться 
+на любое большее количество друзей
 
-                       
+'''
+
+
+dit = {'миша':('веревка',"еда","вода"),
+       'паша':("еда","вода","палатка"),
+       'саша':("еда","вода","текила"),
+       'маша':("еда","вода","веревка"),}
+
+def question_1(d:dict)-> None:
+    lis = list(map(set,d.values()))
+    print(f'Есть у всех : {set.intersection(*lis)}')
+    print(f'{set.difference(*lis) if set.difference(*lis) else set.difference(*lis[::-1])}')
+    '''
+    Не получаеться понять как сделать с помощью методов set,при измене вещей всё идёт крахом и выводы не верные
+    '''
+
+    
+    
+        
+
+    
+print(question_1(dit))   
+
+
