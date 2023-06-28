@@ -97,7 +97,7 @@ def task_6():
                                 print("Не достаточно средств")
                             else:
                                 replenish = int(replenish)
-                                summa -= replenish + 30 if (s := ((replenish / 100) * percent)) < 30 else 600 if s >600 else s
+                                summa -= replenish + (30 if (s := ((replenish / 100) * percent)) < 30 else 600 if s >600 else s)
                                 summa = f'{summa:.2f}'
                                 summa = float(summa)
                                 print(f'Вашь баланс на данный момент состовляет {summa}')
@@ -111,7 +111,7 @@ def task_6():
                                 print("Не достаточно средств")
                             else:
                                 replenish = int(replenish)
-                                summa -= replenish + 30 if (s := ((replenish / 100) * percent)) < 30 else 600 if s >600 else s
+                                summa -= replenish + (30 if (s := ((replenish / 100) * percent)) < 30 else 600 if s >600 else s)
                                 summa = f'{summa:.2f}'
                                 summa = float(summa)
                                 count += 1
