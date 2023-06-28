@@ -22,3 +22,13 @@ print(task_7(dit))
 ✔ Значения не удаляются, а помещаются в одноимённые переменные без s на конце.
 
 '''
+Skits = 0
+Passbk = 0
+Tribons = 0
+srwar = 0
+def task_8():
+
+    return [x for x in dir() if not x.startswith('__')]
+
+print(task_8())
+print([eval(x) for x in dir()])
