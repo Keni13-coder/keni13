@@ -104,6 +104,7 @@ LIST = ('50','100','150','500','1000','5000','Другое','Выход')
 percent = 1.5
 count = 0
 TAX = 10
+operation = {}
 def task_choice()->str:
     print('Выберите следующие действия\n'
               '1: Пополнить\n'
@@ -120,7 +121,7 @@ def task_choice()->str:
            
 def account_replenishment()->None|object:# Пополнение счета
     
-    global summa,LIST,percent,count,TAX
+    global summa,LIST,percent,count,TAX,operation
     print(f'Вашь баланс на данный момент состовляет {summa}')
     if summa > 5_000_000:
         percent = TAX 
@@ -138,12 +139,14 @@ def account_replenishment()->None|object:# Пополнение счета
             summa += int(replenish)
             print(f'Вашь баланс на данный момент состовляет {summa}')
             count += 1
+            operation.setdefault('Пополнение',[]).append(replenish)
         else:
             print('Данное число не найдено')     
     elif replenish == 'Другое':
         try:
             replenish = int(input("Введите другое число для пополнение: ").strip())
             summa += int(replenish)
+            operation.setdefault('Пополнение',[]).append(replenish)
             count += 1
             print(f'Вашь баланс на данный момент состовляет {summa}')
         except  ValueError:
@@ -154,7 +157,7 @@ def account_replenishment()->None|object:# Пополнение счета
                 
                 
 def account_withdrawal()->None|object: # Снятие денег
-    global summa,LIST,percent,count,TAX
+    global summa,LIST,percent,count,TAX,operation
     print(f'Вашь баланс на данный момент состовляет {summa}')
     if summa > 5_000_000:
         percent = TAX 
@@ -176,6 +179,7 @@ def account_withdrawal()->None|object: # Снятие денег
                 summa -= replenish + (30 if (s := ((replenish / 100) * percent)) < 30 else 600 if s >600 else s)
                 summa = f'{summa:.2f}'
                 summa = float(summa)
+                operation.setdefault('Снятие',[]).append(replenish)
                 print(f'Вашь баланс на данный момент состовляет {summa}')
                 count += 1
         else:
@@ -190,6 +194,7 @@ def account_withdrawal()->None|object: # Снятие денег
                 summa -= replenish + (30 if (s := ((replenish / 100) * percent)) < 30 else 600 if s >600 else s)
                 summa = f'{summa:.2f}'
                 summa = float(summa)
+                operation.setdefault('Снятие',[]).append(replenish)
                 count += 1
                 print(f'Вашь баланс на данный момент состовляет {summa}')
         except  ValueError:
@@ -221,6 +226,7 @@ def main()->object|str:
     else:
         print("Завершение програмыы")    
           
-main()    
+main()
+print(operation)    
      
      
