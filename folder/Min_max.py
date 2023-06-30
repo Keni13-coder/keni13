@@ -38,3 +38,19 @@ def max_mind(array):
     return sum(array[array.index(min(array))+1:array.index(max(array))]) if array.index(max(array)) > array.index(min(array)) else sum(array[array.index(max(array))+1:array.index(min(array))])
 
 print(max_mind([2,3,4,5,88,66,44,99,1]))
+
+# функция нажодящая сумму чисел кроме минимальных и максемальных значений
+
+def funk(array):
+    return sum([i for i in array if i != sorted(array)[0] and  i != sorted(array)[-1]])
+
+
+print(funk([2,3,4,5,88,66,44,99,1]))
+
+
+# функция находящая сумму чисел между максимальным и минимальным значением
+
+def max_min(array):
+    return sum([ i for i in array if array.index(max(array)) + 1 != array.index(min(array)) and i !=max(array) and i != min(array)])
+
+print(max_min([2,3,4,5,88,66,44,99,1]))
