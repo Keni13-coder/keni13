@@ -673,6 +673,26 @@ output
 The function should return an integer, the total time required.
 
 
+Task 59
+
+Given n, take the sum of the digits of n. If that value has more than one digit, continue reducing in this way until a single-digit number is produced. The input will be a non-negative integer.
+
+
+
+Task 60
+
+
+Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits
+
+
+
+
+
+Task 61
+
+
+Вам будет выдан массив чисел. Вы должны отсортировать нечетные числа в порядке возрастания, оставив четные числа на их первоначальных позициях.
+
 
                                              Kyu 5
 
@@ -802,3 +822,13 @@ or a range of integers denoted by the starting integer separated from the end in
 Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
 solution([-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20])
 # returns "-10--8,-6,-3-1,3-5,7-11,14,15,17-20"
+
+
+Task 58  
+
+
+Он преобразовал все известные ему руны в цифры. Единственные операторы, которые он знает, - это сложение (+), вычитание (-) и умножение (*), так что это единственные, которые появятся. Каждое число будет находиться в диапазоне от -1000000 до 1000000 и будет состоять только из цифр 0-9, возможно, начальных - и, возможно, нескольких ?s. Если в выражении есть ?s, они представляют собой цифровую руну, которую профессор не знает (никогда не оператор и никогда не начальная буква -). Все ?s в выражении будут представлять одну и ту же цифру (0-9), и это не будет одна из других заданных цифр в выражении. Ни одно число не будет начинаться с 0, если только само число не равно 0, следовательно, 00 не будет допустимым числом.
+
+Получив выражение, вычислите значение руны, представленной вопросительным знаком. Если работает более одной цифры, укажите самую младшую. Если ни одна цифра не работает, что ж, это плохая новость для профессора - это означает, что он неправильно понял некоторые из своих рун. в этом случае вывод -1.
+
+Завершите метод, чтобы s
