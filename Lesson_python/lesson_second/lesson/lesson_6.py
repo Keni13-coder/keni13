@@ -8,14 +8,16 @@ from modules.find import find_number as find
 import modules.secret as secr
 from sys import argv as ar
 import modules.calendar as cal
+from modules.queen_of_chess import  *
 
+# def main():
+#     arguments = ar[1:]
+#     funk = find(*map(int,arguments))
+#     if funk:
+#         return "все класс"
+#     return "не класс"
+# # secr.dictionary_secret()
+# # print(secr.rezul_dict())
+# print(cal.date('29.02.2001'))
 
-def main():
-    arguments = ar[1:]
-    funk = find(*map(int,arguments))
-    if funk:
-        return "все класс"
-    return "хуила"
-# secr.dictionary_secret()
-# print(secr.rezul_dict())
-print(cal.date('29.02.2001'))
+print(main())

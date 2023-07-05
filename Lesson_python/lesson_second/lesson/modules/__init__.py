@@ -1,1 +1,1 @@
-__all__ = ['calendar','find','secret']
+__all__ = ['calendar','find','secret','queen_of_chess']
