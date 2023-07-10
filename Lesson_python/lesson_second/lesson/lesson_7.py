@@ -107,6 +107,7 @@
 import os
 import random as rd
 from itertools import cycle
+from pathlib import Path
 
 
 # def task_1(number_row:int, file_name:str)->None:
@@ -134,12 +135,12 @@ def task_2(file_name=0, min_number_name=6, max_number_name=7)-> None|str:
     if file_name:
         with open(f'{file_name}','a',encoding='utf-8') as file:
             new_name_file = f'{rd.choice(VOWELS)}'
-            for _ in range(rd.randint(min_number_name,max_number_name)):
+            for _ in range(1,rd.randint(min_number_name,max_number_name)):
                 new_name_file += rd.choice(ALPHABET)
             file.write(f'{new_name_file.capitalize()}\n')
     else:
         new_name_file = f'{rd.choice(VOWELS)}'
-        for _ in range(rd.randint(min_number_name,max_number_name)):
+        for _ in range(1,rd.randint(min_number_name,max_number_name)):
             new_name_file += rd.choice(ALPHABET)
         return new_name_file    
 # task_2('test_lesson_7\\task_2.txt')
@@ -205,8 +206,9 @@ def task_4(expansion='txt', min_name=6, max_name=30, min_byte=256, max_byte=4096
     byte = rd.randint(min_byte,max_byte)
     for _ in range(count_file):
         name = task_2(0,min_name,max_name)
-        with open(f'{name}.{expansion}','ab') as f:
+        with open(f'{name}.{expansion}','xb') as f:
             f.write(os.urandom(byte))
+            
 
 # task_4('txt',6,6,count_file=1)        
 
@@ -222,13 +224,29 @@ def task_4(expansion='txt', min_name=6, max_name=30, min_byte=256, max_byte=4096
 ✔ Количество файлов для каждого расширения различно. 
 ✔ Внутри используйте вызов функции из прошлой задачи.
 '''
+'''
+Задание №6
+✔ Дорабатываем функции из предыдущих задач. 
+✔ Генерируйте файлы в указанную директорию — отдельный параметр функции. 
+✔ Отсутствие/наличие директории не должно вызывать ошибок в работе функции 
+(добавьте проверки). 
+✔ Существующие файлы не должны удаляться/изменяться в случае совпадения имён.
+'''
 
-
-def task_5(expansions: list[str], count_file: int):
-    end_file_name = expansions + [rd.choice(expansions) for _ in range(count_file-len(expansions))]
+def task_5(expansions: list[str], count_file: int, directory=Path().cwd()):
+    end_file_name = [rd.choice(expansions) for _ in range(count_file)]
+    if Path(directory).is_dir():
+        os.chdir(directory)
+    else:
+        directory = Path().cwd()/directory
+        Path(directory).mkdir(parents=True)
+        os.chdir(directory)
+        print(directory)   
     for x in end_file_name:
-        task_4(x,count_file=1)
+        try:
+            task_4(x,min_name=1,max_name=2,count_file=1)
+        except FileExistsError:
+            print(f'Данное имя уже зарезервировано')
 
 
-
-task_5(['txt','bin','cvs'],4)
+task_5(['txt'],5,'folder\\test')
