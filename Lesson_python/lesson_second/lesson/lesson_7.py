@@ -110,13 +110,13 @@ from itertools import cycle
 from pathlib import Path
 
 
-# def task_1(number_row:int, file_name:str)->None:
-#     RANGE_NUMBER = 1000
-#     with open(f'{file_name}','a',encoding='utf-8') as file:
-#         for _ in range(number_row):
-#             file.write(f'{rd.randint(-RANGE_NUMBER,RANGE_NUMBER)} | {rd.uniform(float(-RANGE_NUMBER),float(RANGE_NUMBER)):.2f}\n')
+def task_1(number_row:int, file_name:str)->None:
+    RANGE_NUMBER = 1000
+    with open(f'{file_name}','a',encoding='utf-8') as file:
+        for _ in range(number_row):
+            file.write(f'{rd.randint(-RANGE_NUMBER,RANGE_NUMBER)} | {rd.uniform(float(-RANGE_NUMBER),float(RANGE_NUMBER)):.2f}\n')
             
-# task_1(3,'test_lesson_7\\task_1.txt')            
+      
 
 
 '''
@@ -143,7 +143,7 @@ def task_2(file_name=0, min_number_name=6, max_number_name=7)-> None|str:
         for _ in range(1,rd.randint(min_number_name,max_number_name)):
             new_name_file += rd.choice(ALPHABET)
         return new_name_file    
-# task_2('test_lesson_7\\task_2.txt')
+
 
 
 '''
@@ -185,7 +185,7 @@ def task_3(first_file_name: str, second_file_name: str)-> None:
                     rezul.write(f'{y.upper()}:{int(x)}\n')
                 else:
                     rezul.write(f'{y.lower()}:{abs(x)}\n')
-# task_3('test_lesson_7\\task_2.txt','test_lesson_7\\task_1.txt') 
+
 
 
 '''
@@ -210,9 +210,7 @@ def task_4(expansion='txt', min_name=6, max_name=30, min_byte=256, max_byte=4096
             f.write(os.urandom(byte))
             
 
-# task_4('txt',6,6,count_file=1)        
 
-# print(os.path.getsize("afkpvvuwatwihhawpsadppib.txt"))
 
 
 '''
@@ -244,9 +242,107 @@ def task_5(expansions: list[str], count_file: int, directory=Path().cwd()):
         print(directory)   
     for x in end_file_name:
         try:
-            task_4(x,min_name=1,max_name=2,count_file=1)
+            task_4(x,count_file=1)
         except FileExistsError:
             print(f'Данное имя уже зарезервировано')
 
 
-task_5(['txt'],5,'folder\\test')
+
+'''
+Задание №7
+✔ Создайте функцию для сортировки файлов по директориям: видео, изображения, текст и т.п. 
+✔ Каждая группа включает файлы с несколькими расширениями. 
+✔ В исходной папке должны остаться только те файлы, которые не подошли для сортировки.
+'''
+
+
+
+def task_7(directory: str)-> None:
+
+    extensions = {
+    'video': ['mp4', 'mov', 'avi', 'mkv', 'wmv', '3gp', '3g2', 'mpg', 'mpeg', 'm4v', 
+              'h264', 'flv', 'rm', 'swf', 'vob'],
+
+    'data': ['sql', 'sqlite', 'sqlite3', 'csv', 'dat', 'db', 'log', 'mdb', 'sav', 
+             'tar', 'xml'],
+
+    'audio': ['mp3', 'wav', 'ogg', 'flac', 'aif', 'mid', 'midi', 'mpa', 'wma', 'wpl',
+              'cda'],
+
+    'image': ['jpg', 'png', 'bmp', 'ai', 'psd', 'ico', 'jpeg', 'ps', 'svg', 'tif', 
+              'tiff'],
+    'text': ['pdf', 'txt', 'doc', 'docx', 'rtf', 'tex', 'wpd', 'odt'],
+    
+    'exe': ['exe'],
+    }
+    if not Path(directory).is_dir():
+        directory = Path().cwd() / directory
+        Path(directory).mkdir(parents=True)
+        task_5(['txt','mp4', 'mov', 'avi','sqlite', 'sqlite3', 'csv', 'dat','mp3', 'wav', 'ogg','pdf', 'txt', 'doc', 'docx'],15,directory)
+
+    rezul  = [file.split('.') for dirs, folders, files in os.walk(directory) for file in files]
+
+    for (name, expan) in rezul:
+        for k, v in extensions.items():
+            if expan in v:
+                new_dir = Path().cwd() / directory / k 
+                if new_dir.is_dir():
+                    old_dir = Path(directory) / f'{name}.{expan}'
+                    old_dir = old_dir.replace(new_dir / f'{name}.{expan}')
+                else:
+                    Path(new_dir).mkdir(parents=True)
+                    old_dir = Path(directory) / f'{name}.{expan}'
+                    old_dir = old_dir.replace(new_dir / f'{name}.{expan}')
+
+'''old_file = Path(old_name)
+    new_file = old_file.replace(Path().cwd() / folder / old_file)
+    такая конструкция перемещает в ново - созданное  предсатвление дериктории с помощью (Path().cwd() / folder  / old_file)'''
+    
+    
+'''
+Задание
+✔ Решить задачи, которые не успели решить на семинаре. +
+✔ Напишите функцию группового переименования файлов. Она должна:
+✔ принимать параметр желаемое конечное имя файлов. +
+При переименовании в конце имени добавляется порядковый номер.
+✔ принимать параметр количество цифр в порядковом номере.
+✔ принимать параметр расширение исходного файла. 
+Переименование должно работать только для этих файлов внутри каталога.
+✔ принимать параметр расширение конечного файла.
+✔ принимать диапазон сохраняемого оригинального имени. Например для диапазона 
+[3, 6] берутся буквы с 3 по 6 из исходного имени файла. К ним прибавляется 
+желаемое конечное имя, если оно передано. Далее счётчик файлов и расширение.
+✔ Соберите из созданных на уроке и в рамках домашнего задания функций пакет для работы с файлами.
+'''
+
+def home(end_name: str, count_sequence_number: int , start_expansions: str, end_expansions: str, slice_name:list[int,int], directory=Path().cwd()):
+    start_number = 1
+    start_slice, end_slace = slice_name
+    for dirs, folders, files in os.walk(directory):
+        for i,file in enumerate(files):
+            if file.endswith(start_expansions):
+                old_name = Path(dirs) / file
+                old_name.rename(f'{dirs}\{file[start_slice:end_slace]}{end_name}{str(start_number).zfill(count_sequence_number)}.{end_expansions}')
+                start_number += 1
+            
+            
+
+
+
+
+
+
+
+
+from works_file import *
+if __name__ == '__main__':
+    # task_5(['txt','mp4', 'mov', 'avi','sqlite', 'sqlite3', 'csv', 'dat','mp3', 'wav', 'ogg','pdf', 'txt', 'doc', 'docx'],15,'Test_folder_file')
+    # task_4('txt',6,6,count_file=1)        
+    # task_3('test_lesson_7\\task_2.txt','test_lesson_7\\task_1.txt') 
+    # print(os.path.getsize("afkpvvuwatwihhawpsadppib.txt"))
+    # task_1(3,'test_lesson_7\\task_1.txt') 
+    # home('блять',3,'txt','dat',[0,2],'Test_folder_file') 
+    sort_file.sorted_file('Test_folder_file')
+    # sort_file.sorted_file('Test_folder_file')
+    # task_7('Test_folder_file') 
+    pass
