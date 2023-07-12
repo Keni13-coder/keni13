@@ -8,7 +8,7 @@ def duo(first_file_name: str, second_file_name: str)-> None:
     with (
         open(f'{first_file_name}','r',encoding='utf-8') as first_file,
         open(f'{second_file_name}', 'r',encoding='utf-8') as second_file,
-        open(f'test_lesson_7\\rezul.txt','a',encoding='utf-8') as rezul 
+        open(f'rezul.txt','a',encoding='utf-8') as rezul 
         ):
         name_list = list(map(lambda x: x.replace('\n',''),first_file.readlines()))
         number_list = list(map(lambda x: x.split('|'),second_file.readlines()))
@@ -27,3 +27,6 @@ def duo(first_file_name: str, second_file_name: str)-> None:
                     rezul.write(f'{y.upper()}:{int(x)}\n')
                 else:
                     rezul.write(f'{y.lower()}:{abs(x)}\n')
+                    
+if __name__ == '__main__':
+    duo('TESTING_name','TESTING')                  

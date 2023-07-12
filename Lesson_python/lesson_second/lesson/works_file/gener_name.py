@@ -17,3 +17,8 @@ def generator_names(file_name=0, min_number_name=6, max_number_name=7)-> None|st
         for _ in range(1,rd.randint(min_number_name,max_number_name)):
             new_name_file += rd.choice(ALPHABET)
         return new_name_file 
+    
+    
+    
+if __name__ == '__main__':
+   generator_names('TESTING_name')    
