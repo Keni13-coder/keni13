@@ -2,7 +2,7 @@
     json.loads(json_text) - преобразовывает текстовое представление json в объект питона
     json.dump(dict,file) - сохранение обекта питона в json file
     json.dumps() - сохранение обекта питона в json строку
-    json.dump(ensure_ascill=False) - для отключение аске, чтоб бывол видно другие языки
+    json.dump(ensure_ascii=False) - для отключение аске, чтоб бывол видно другие языки
     json.dump( indent - отвечает за переносы строк,
                 separators - 2 параментра: символ между элементами и символ между ключём и значением
                 sort_keys = True сортирует ключи, даже вложенные
@@ -49,7 +49,7 @@ pickle.loads(data) - получение объекта из бинарной с�
 '''
 
 import json
-
+import csv
 
 '''
 Задание №1
@@ -86,21 +86,83 @@ JSON файл.
 
 '''
 
-def task_2():
-    # while True:
-        
-    #     print('Для выхода введите exit: ')
-    #     name = input('Введите имя: ')
-    #     id_ = input('Введите id: ')
-    #     level = input('Введите уровень доступа: ')
-    #     if 'exit' in (name,id_,level):
-    #         break
-    #     dict_ = {id_ : {name : level}}
-    #     print(dict_)
+def task_2()-> None:
+    while True:
+        end = input('Для выхода введите exit или enter чтобы продолжить: ')
+        if 'exit' == end:
+            break
+        name = input('Введите имя: ')
+        id_ = input('Введите id: ')
+        level = input('Введите уровень доступа: ')
+
         with open('Lesson_python\lesson_second\lesson\\test.json','r+',encoding='utf-8') as f:
-            read_ = list(f)
-            print(read_)
-        
+            try:
+                read_ : dict = json.load(f)
+                vulues = [x for x in read_.values()]
+            except json.decoder.JSONDecodeError:
+                vulues = []
+                read_ = {}
+            if level not in read_:
+                if not any(map(lambda x: id_ in x , vulues)):
+                    read_[level] = {id_:name}
+                
+            else:
+                if not any(map(lambda x: id_ in x , vulues)):        
+                    read_.setdefault(level,{}).update({id_:name})
+                
+            with open('Lesson_python\lesson_second\lesson\\test.json','w+',encoding='utf-8') as rezul:
+                json.dump(read_,rezul,ensure_ascii=False,indent=2,sort_keys=True)
+                
+                
+                
+                
+'''
+Напишите функцию, которая сохраняет созданный в
+прошлом задании файл в формате CSV.
+'''
+def task_3()-> None:
+    with open('Lesson_python\lesson_second\lesson\\test.json','r',encoding='utf-8') as f:
+        reader_ : dict= json.load(f)
+        print(reader_)
+        with open('Lesson_python\lesson_second\lesson\\testing.csv','w',encoding='utf-8',newline='') as rez:
+            writer = csv.DictWriter(rez,fieldnames=[*reader_.keys()])
+            writer.writeheader()
+            writer.writerow(reader_)
+
+
+
+
+
+
+'''
+Задание №4
+Прочитайте созданный в прошлом задании csv файл без
+использования csv.DictReader.
+Дополните id до 10 цифр незначащими нулями.
+В именах первую букву сделайте прописной.
+Добавьте поле хеш на основе имени и идентификатора.
+Получившиеся записи сохраните в json файл, где каждая строка
+csv файла представлена как отдельный json словарь.
+Имя исходного и конечного файлов передавайте как аргументы
+функции.
+'''
+
+
+def task_4()->None:
+    with open('Lesson_python\lesson_second\lesson\\testing.csv','r',newline='',encoding='utf-8') as file:
+        reader = [*csv.reader(file)]
+        rez = {x: y for (x,y) in [*zip(reader[0],reader[1])]}
+        # rez = json.dumps(rez,ensure_ascii=False)
+        # rez = json.loads(rez)
+        for k,v in rez.items():
+            v = json.loads(v.replace("'",'"'))
+            for x in v.values():
+                print(x)
+    
+
+
 if __name__ == '__main__':
     # task_1('rezul.txt')
-    task_2()        
+    # task_2()        
+    # task_3()
+    task_4()
