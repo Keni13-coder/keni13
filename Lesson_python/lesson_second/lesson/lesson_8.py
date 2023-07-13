@@ -97,9 +97,16 @@ def task_2():
     #         break
     #     dict_ = {id_ : {name : level}}
     #     print(dict_)
-        with open('Lesson_python\lesson_second\lesson\\test.json','r+',encoding='utf-8') as f:
-            read_ = list(f)
-            print(read_)
+    di = {
+    "Aeoupw":"833891.7", 
+    "Alnqaqz":"442210", 
+    "Aivdpi":"542147", 
+    "Awmvea":"95904.0", 
+    "Iofxws":"81015.48"
+        }
+    with open('Lesson_python\lesson_second\lesson\\test.json','r+',encoding='utf-8') as f:
+        json.dump(di,f)
+
         
 if __name__ == '__main__':
     # task_1('rezul.txt')
