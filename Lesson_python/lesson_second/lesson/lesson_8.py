@@ -50,7 +50,10 @@ pickle.loads(data) - получение объекта из бинарной с�
 
 import json
 import csv
-
+import random as rd
+from collections import defaultdict
+import os
+import pickle
 '''
 Задание №1
 Вспоминаем задачу 3 из прошлого семинара. Мы сформировали
@@ -63,7 +66,7 @@ import csv
 
 def task_1(file_name: str)-> None:
     with (open(file_name,'r',encoding='utf-8') as f,
-          open('test_js.json','w+',encoding='utf-8') as js):
+          open('Lesson_python\lesson_second\lesson\Test_file\\test_js.json','w+',encoding='utf-8') as js):
         d = dict(x.replace('\n', '').capitalize().split(':')  for x in f)
         json.dump(d,js,indent=2,separators=(', ',':'))
 
@@ -95,7 +98,7 @@ def task_2()-> None:
         id_ = input('Введите id: ')
         level = input('Введите уровень доступа: ')
 
-        with open('Lesson_python\lesson_second\lesson\\test.json','r+',encoding='utf-8') as f:
+        with open('Lesson_python\lesson_second\lesson\Test_file\\test.json','r+',encoding='utf-8') as f:
             try:
                 read_ : dict = json.load(f)
                 vulues = [x for x in read_.values()]
@@ -110,7 +113,7 @@ def task_2()-> None:
                 if not any(map(lambda x: id_ in x , vulues)):        
                     read_.setdefault(level,{}).update({id_:name})
                 
-            with open('Lesson_python\lesson_second\lesson\\test.json','w+',encoding='utf-8') as rezul:
+            with open('Lesson_python\lesson_second\lesson\Test_file\\test.json','w+',encoding='utf-8') as rezul:
                 json.dump(read_,rezul,ensure_ascii=False,indent=2,sort_keys=True)
                 
                 
@@ -121,15 +124,13 @@ def task_2()-> None:
 прошлом задании файл в формате CSV.
 '''
 def task_3()-> None:
-    with open('Lesson_python\lesson_second\lesson\\test.json','r',encoding='utf-8') as f:
+    with open('Lesson_python\lesson_second\lesson\Test_file\test.json','r',encoding='utf-8') as f:
         reader_ : dict= json.load(f)
         print(reader_)
-        with open('Lesson_python\lesson_second\lesson\\testing.csv','w',encoding='utf-8',newline='') as rez:
+        with open('Lesson_python\lesson_second\lesson\Test_file\\testing.csv','w',encoding='utf-8',newline='') as rez:
             writer = csv.DictWriter(rez,fieldnames=[*reader_.keys()])
             writer.writeheader()
             writer.writerow(reader_)
-
-
 
 
 
@@ -148,21 +149,117 @@ csv файла представлена как отдельный json слов�
 '''
 
 
-def task_4()->None:
-    with open('Lesson_python\lesson_second\lesson\\testing.csv','r',newline='',encoding='utf-8') as file:
+def task_4(star_file_csv: str, end_file_json: str)->None | str:
+    try:
+        with (open(star_file_csv,'r',newline='',encoding='utf-8') as file,
+              open(end_file_json,'w',encoding='utf-8') as rezul_file):
+            
+            reader = [*csv.reader(file)]
+            dict_reader = {head: row for (head,row) in zip(reader[0],reader[1])}
+            dict_ = defaultdict(dict)
+        
+            for k,v in dict_reader.items():
+                v: dict = json.loads(v.replace("'",'"'))
+                for id_,name in v.items():
+                    id_ = ''.join(str(rd.randint(1,9)) if i =='0' else i for i in id_.zfill(10))
+                    dict_[k].update({id_ : name.capitalize()})
+                    dict_['hash'].update({id_ : hash(id_ + name.capitalize())})
+            json.dump(dict_, rezul_file, indent=2, ensure_ascii=False, sort_keys=True) 
+                  
+    except FileNotFoundError:
+        return 'Файл не найден'
+      
+      
+'''
+Задание №5
+Напишите функцию, которая ищет json файлы в указанной
+директории и сохраняет их содержимое в виде
+одноимённых pickle файлов.
+'''    
+
+
+def task_5(folder_name: str)-> None:
+    for dirs, folders, files in os.walk(folder_name):
+        for file in files:
+            if file.endswith('json'):
+                with (open(f'{dirs}/{file}','r',encoding='utf-8') as f,
+                      open(f'{dirs}/{file.rstrip(".json")}.pickle','wb') as rezul):
+                    new_file = json.load(f)
+                    pickle.dump(new_file,rezul)
+  
+  
+'''
+Задание №6
+Напишите функцию, которая преобразует pickle файл
+хранящий список словарей в табличный csv файл.
+Для тестированию возьмите pickle версию файла из задачи
+4 этого семинара.
+Функция должна извлекать ключи словаря для заголовков
+столбца из переданного файла.
+'''  
+
+
+def task_6(pickle_file: str)-> None:
+    with (open(pickle_file,'rb') as pic_file,
+          open(f'{os.getcwd()}\\rezul.csv','w',newline='',encoding='utf-8')as rezul):
+        reader = pickle.load(pic_file)
+        writer = csv.DictWriter(rezul,fieldnames=[*reader.keys()])
+        writer.writeheader()
+        writer.writerow(reader)
+
+
+
+
+
+'''
+Задание №7
+Прочитайте созданный в прошлом задании csv файл без
+использования csv.DictReader.
+Распечатайте его как pickle строку.
+'''
+
+def task_7(csv_file: str)->str:
+    with open(csv_file,'r',encoding='utf-8',newline='') as file:
         reader = [*csv.reader(file)]
-        rez = {x: y for (x,y) in [*zip(reader[0],reader[1])]}
-        # rez = json.dumps(rez,ensure_ascii=False)
-        # rez = json.loads(rez)
-        for k,v in rez.items():
-            v = json.loads(v.replace("'",'"'))
-            for x in v.values():
-                print(x)
+        dict_reader = {head: row for (head,row) in zip(reader[0],reader[1])}
+        rezul = pickle.dumps(dict_reader)
+        return rezul
     
+    
+'''
+Задание
+Решить задачи, которые не успели решить на семинаре.
+Напишите функцию, которая получает на вход директорию и рекурсивно 
+обходит её и все вложенные директории. Результаты обхода сохраните в 
+файлы json, csv и pickle. 
+○ Для дочерних объектов указывайте родительскую директорию. 
+○ Для каждого объекта укажите файл это или директория.
+○ Для файлов сохраните его размер в байтах, а для директорий размер 
+файлов в ней с учётом всех вложенных файлов и директорий.
+Соберите из созданных на уроке и в рамках домашнего задания функций 
+пакет для работы с файлами разных форматов.
+'''    
 
 
+def task_home(directory_: str):
+    size = 0
+    for dir_, folders, files in os.walk(directory_):
+        for folder in folders:
+            print(f'родитель {dir_}: дочерний {folder}')
+        
+        
+        for file in files:
+            way = f"{dir_}/{file}"     
+            print(f'{file=}: {os.path.isfile(way)}\t, {os.stat(way).st_size}')
+            size += os.path.getsize(way)  
+        print(f'{dir_=}: {os.path.isdir(dir_)}\t ,{os.stat(way).st_size}')     
 if __name__ == '__main__':
     # task_1('rezul.txt')
     # task_2()        
     # task_3()
-    task_4()
+    # print(task_4('Lesson_python\lesson_second\lesson\\testing.csv','Lesson_python\lesson_second\lesson\\rezul.json'))
+    # task_5('Lesson_python\lesson_second\lesson')
+    # task_6('Lesson_python\lesson_second\lesson\\rezul.pickle')
+    # print(task_7('rezul.csv'))
+    task_home('Lesson_python\lesson_second\lesson')
+    pass

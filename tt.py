@@ -1,3 +1,5 @@
 import json
-d={'3': "{'89': 'егор'}", '7': "{'53': 'Саша', '67': 'Влад'}"}
-print(json.loads(d))
+import random as rd
+import os
+
+print(os.path.getsize('Lesson_python\lesson_second\lesson'))
