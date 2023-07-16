@@ -17,7 +17,7 @@
 wiht open(newline='')-для правельного чтения csv
 csv.reader(file) - построчное чтение файла, строка являеться list 
 csv.reader(file, dialect=excel-tab)-  в обычной чтение читаеться через зяпятую, через dialect=excel-tab мы говорим что разделитель TAB
-csv.reader(file, quoting = cvs.QUOTE_NONNUMERIC) - если число не было в кавчках, то преобразует в число
+csv.reader(file, quoting = csv.QUOTE_NONNUMERIC) - если число не было в кавчках, то преобразует в число
 
 csv.writer(f) - обычная запись в файл
 csv.writer.writerow(line) - сохранение списка в одной строке
