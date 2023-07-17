@@ -245,14 +245,15 @@ def task_home(directory_: str):
     size = 0
     for dir_, folders, files in os.walk(directory_):
         for folder in folders:
-            print(f'родитель {dir_}: дочерний {folder}')
+            way = f"{dir_}/{folder}"
+            print(f'родитель {dir_}: дочерний {folder},{os.path.getsize(dir_)} ')
         
         
-        for file in files:
-            way = f"{dir_}/{file}"     
-            print(f'{file=}: {os.path.isfile(way)}\t, {os.stat(way).st_size}')
-            size += os.path.getsize(way)  
-        print(f'{dir_=}: {os.path.isdir(dir_)}\t ,{os.stat(way).st_size}')     
+            for file in files:
+                way = f"{dir_}/{file}"     
+                print(f'{file=}: {os.path.isfile(way)}\t, {os.path.getsize(way)}')
+                size += os.path.getsize(way)  
+        # print(f'{dir_=}: {os.path.isdir(dir_)}\t ,{os.stat(way).st_size}')     
 if __name__ == '__main__':
     # task_1('rezul.txt')
     # task_2()        
