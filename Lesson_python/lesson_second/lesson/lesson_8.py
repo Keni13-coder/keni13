@@ -17,7 +17,7 @@
 wiht open(newline='')-для правельного чтения csv
 csv.reader(file) - построчное чтение файла, строка являеться list 
 csv.reader(file, dialect=excel-tab)-  в обычной чтение читаеться через зяпятую, через dialect=excel-tab мы говорим что разделитель TAB
-csv.reader(file, quoting = cvs.QUOTE_NONNUMERIC) - если число не было в кавчках, то преобразует в число
+csv.reader(file, quoting = csv.QUOTE_NONNUMERIC) - если число не было в кавчках, то преобразует в число
 
 csv.writer(f) - обычная запись в файл
 csv.writer.writerow(line) - сохранение списка в одной строке
@@ -64,9 +64,9 @@ import pickle
 Каждую пару сохраняйте с новой строки.
 '''
 
-def task_1(file_name: str)-> None:
+def task_1(file_name: str, end_file=os.getcwd())-> None:
     with (open(file_name,'r',encoding='utf-8') as f,
-          open('Lesson_python\lesson_second\lesson\Test_file\\test_js.json','w+',encoding='utf-8') as js):
+          open(f'{end_file}\Test_file\\test_js.json','w+',encoding='utf-8') as js):
         d = dict(x.replace('\n', '').capitalize().split(':')  for x in f)
         json.dump(d,js,indent=2,separators=(', ',':'))
 
@@ -89,7 +89,7 @@ JSON файл.
 
 '''
 
-def task_2()-> None:
+def task_2(end_file=os.getcwd())-> None:
     while True:
         end = input('Для выхода введите exit или enter чтобы продолжить: ')
         if 'exit' == end:
@@ -98,7 +98,7 @@ def task_2()-> None:
         id_ = input('Введите id: ')
         level = input('Введите уровень доступа: ')
 
-        with open('Lesson_python\lesson_second\lesson\Test_file\\test.json','r+',encoding='utf-8') as f:
+        with open(f'{end_file}\Test_file\\test.json','r+',encoding='utf-8') as f:
             try:
                 read_ : dict = json.load(f)
                 vulues = [x for x in read_.values()]
@@ -113,7 +113,7 @@ def task_2()-> None:
                 if not any(map(lambda x: id_ in x , vulues)):        
                     read_.setdefault(level,{}).update({id_:name})
                 
-            with open('Lesson_python\lesson_second\lesson\Test_file\\test.json','w+',encoding='utf-8') as rezul:
+            with open(f'{end_file}\Test_file\\test.json','w+',encoding='utf-8') as rezul:
                 json.dump(read_,rezul,ensure_ascii=False,indent=2,sort_keys=True)
                 
                 
@@ -123,15 +123,17 @@ def task_2()-> None:
 Напишите функцию, которая сохраняет созданный в
 прошлом задании файл в формате CSV.
 '''
-def task_3()-> None:
-    with open('Lesson_python\lesson_second\lesson\Test_file\test.json','r',encoding='utf-8') as f:
-        reader_ : dict= json.load(f)
-        print(reader_)
-        with open('Lesson_python\lesson_second\lesson\Test_file\\testing.csv','w',encoding='utf-8',newline='') as rez:
-            writer = csv.DictWriter(rez,fieldnames=[*reader_.keys()])
-            writer.writeheader()
-            writer.writerow(reader_)
-
+def task_3(end_file=os.getcwd())-> None:
+    try:
+        with open(f'{end_file}\Test_file\\test.json','r',encoding='utf-8') as f:
+            reader_ : dict= json.load(f)
+            print(reader_)
+            with open(f'{end_file}Test_file\\testing.csv','w',encoding='utf-8',newline='') as rez:
+                writer = csv.DictWriter(rez,fieldnames=[*reader_.keys()])
+                writer.writeheader()
+                writer.writerow(reader_)
+    except FileNotFoundError:
+        return 'Файл не найден'
 
 
 
@@ -233,27 +235,41 @@ def task_7(csv_file: str)->str:
 обходит её и все вложенные директории. Результаты обхода сохраните в 
 файлы json, csv и pickle. 
 ○ Для дочерних объектов указывайте родительскую директорию. 
-○ Для каждого объекта укажите файл это или директория.
+○ Для каждого объекта укажите файл это или директория. +
 ○ Для файлов сохраните его размер в байтах, а для директорий размер 
-файлов в ней с учётом всех вложенных файлов и директорий.
+файлов в ней с учётом всех вложенных файлов и директорий.+
 Соберите из созданных на уроке и в рамках домашнего задания функций 
 пакет для работы с файлами разных форматов.
 '''    
 
 
-def task_home(directory_: str):
-    size = 0
+def task_home(directory_: str,end_directory:str)-> None:
+    d = defaultdict(dict)
     for dir_, folders, files in os.walk(directory_):
-        for folder in folders:
-            way = f"{dir_}/{folder}"
-            print(f'родитель {dir_}: дочерний {folder},{os.path.getsize(dir_)} ')
-        
-        
-            for file in files:
-                way = f"{dir_}/{file}"     
-                print(f'{file=}: {os.path.isfile(way)}\t, {os.path.getsize(way)}')
-                size += os.path.getsize(way)  
-        # print(f'{dir_=}: {os.path.isdir(dir_)}\t ,{os.stat(way).st_size}')     
+        size = 0
+        for path, dirs_2, fils in os.walk(dir_):
+            for file in fils:
+                way = f"{path}/{file}" 
+                d['Size'].update({file : os.path.getsize(way)})
+                d['file'].update({file:os.path.isfile(way)})
+                d['dir'].update({file: os.path.isdir(way)})   
+                size += os.path.getsize(way)
+            for _dir in dirs_2:
+                d['parent'].update({path:_dir})    
+
+        d['Size'].update({dir_ : size})
+        d['file'].update({dir_:os.path.isfile(dir_)}) 
+        d['dir'].update({dir_: os.path.isdir(dir_)})  
+        with (open(f'{end_directory}\home_task.json','w',encoding='utf-8') as json_file,
+              open(f'{end_directory}\home_task.csv','w',encoding='utf-8',newline='') as csv_file,
+              open(f'{end_directory}\home_task.pickle','wb') as pickle_file):
+            json.dump(d,json_file,ensure_ascii=False,indent=2)
+            writer = csv.DictWriter(csv_file,fieldnames=[*d.keys()])
+            writer.writeheader()
+            writer.writerow(d)
+            pickle.dump(d,pickle_file)
+
+
 if __name__ == '__main__':
     # task_1('rezul.txt')
     # task_2()        
@@ -262,5 +278,5 @@ if __name__ == '__main__':
     # task_5('Lesson_python\lesson_second\lesson')
     # task_6('Lesson_python\lesson_second\lesson\\rezul.pickle')
     # print(task_7('rezul.csv'))
-    task_home('Lesson_python\lesson_second\lesson')
+    # task_home('Lesson_python\lesson_second\lesson','Lesson_python\lesson_second\lesson\Test_file')
     pass
