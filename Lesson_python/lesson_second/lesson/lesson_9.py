@@ -296,4 +296,4 @@ def writer_json_q(path: str)->None:
     return
     
 
-writer_json_q('home_les_9.csv')
+# writer_json_q('home_les_9.csv')
