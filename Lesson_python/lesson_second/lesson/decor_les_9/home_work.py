@@ -3,7 +3,7 @@ import csv
 import numpy as np
 import random
 from typing import Callable
-from decor_les_9 import decor_seved_json
+import decor_seved_json
 
 
 __all__ = ['write_number_csv','writer_json_q']
@@ -18,6 +18,18 @@ def write_number_csv(number_row: int, pach: str=Path().cwd())-> None:
         writer = csv.writer(rez_file)
         writer.writerows(rez)
 
+def __main(funk: Callable)-> Callable[[str],list]:
+    def wrapper(*args,**kwargs)->list:
+        rez = []
+        with open('Test_les_9\home_test\home_les_9.csv','r',newline='',encoding='utf-8') as reader_file:
+            reader_ = csv.reader(reader_file, quoting = csv.QUOTE_NONNUMERIC)
+            for row in reader_:
+                root = funk(*row)
+                rez.append(root)
+        return rez
+    return wrapper
+
+@__main
 @decor_seved_json.write_json('Test_les_9\home_test')
 def __quadratic(a: int|float ,b: int|float ,c: int|float)-> float|complex:
     d = b**2 - 4 * a * c
@@ -30,16 +42,7 @@ def __quadratic(a: int|float ,b: int|float ,c: int|float)-> float|complex:
     return f'первый корень {x_1=} второй корень {x_2=}'
 
 
-def __main(funk: Callable)-> Callable[[str],list]:
-    def wrapper(path: str)->list:
-        rez = []
-        with open(path,'r',newline='',encoding='utf-8') as reader_file:
-            reader_ = csv.reader(reader_file, quoting = csv.QUOTE_NONNUMERIC)
-            for row in reader_:
-                root = __quadratic(*row)
-                rez.append(root)
-        return rez
-    return wrapper
+
 
 
 
@@ -49,4 +52,5 @@ def writer_json_q(path: str)->None:
     return
     
 if __name__ == '__main__':
-    writer_json_q('home_les_9.csv')
+    # writer_json_q('home_les_9.csv')
+    print(__quadratic(1,2,3))
