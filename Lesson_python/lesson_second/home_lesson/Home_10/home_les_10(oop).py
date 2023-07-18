@@ -45,7 +45,7 @@ class Pig(Animals):
     PERCENT = 100
     
     
-    def __init__(self, name, age, weight, price) -> None:
+    def __init__(self, name: str, age: int, weight: int, price: int) -> None:
         self.price = price
         super().__init__(name, age, weight)
     
@@ -64,7 +64,7 @@ class Fish(Animals):
         super().__init__(name, weight, age)
 
     
-    def get_fish(self):
+    def get_fish(self) -> str:
         return f'Рыба и именем {self._name} - {"летающая" if self.isfly else "не летающая"}'
   
   
@@ -78,7 +78,7 @@ class Bird(Animals):
         super().__init__(name, weight, age)
 
 
-    def get_bird(self):
+    def get_bird(self) -> str:
         return 'будет жить' if max(0,self.MAX_AGE - self._age) else f'Птице c именем {self._name} хана'
 
 
@@ -103,7 +103,7 @@ class Factory:
         self.rezul = name_othen(*args, **kwargs) 
         
         
-    def create_class(self):
+    def create_class(self) -> object:
         return self.rezul
      
      

@@ -1,10 +1,13 @@
 class Bank:
-    summa = 0
     LIST = ('50','100','150','500','1000','5000','Другое','Выход')
-    percent = 1.5
-    count = 0
     TAX = 10
-    _operation = {}
+    
+    def __init__(self) -> None:
+        
+        self.summa = 0
+        self.percent = 1.5
+        self.count = 0
+        self._operation = {}
         
         
     def choice(self)->str:
@@ -39,7 +42,7 @@ class Bank:
         elif replenish == 'Другое':
             try:
                 replenish = int(input("Введите другое число для пополнение: ").strip())
-                self.self.summa += int(replenish)
+                self.summa += int(replenish)
                 self._operation.setdefault('Пополнение',[]).append(replenish)
                 self.count += 1
                 print(f'Вашь баланс на данный момент состовляет {self.summa}')
