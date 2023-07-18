@@ -15,8 +15,7 @@ class Bank:
         return 'Удачи'
     
             
-    def account_replenishment(self)->None|object:# Пополнение счета
-        
+    def account_replenishment(self)->None|str: # Пополнение счета
         print(f'Вашь баланс на данный момент состовляет {self.summa}')
         if self.summa > 5_000_000:
             self.percent = self.TAX 
@@ -47,12 +46,11 @@ class Bank:
             except  ValueError:
                 print('Был введён не коректый символ\nЗавершение программы...')
         elif replenish == 'Выход':
-            return 
+            return 'Завершение работы'
                     
                     
                     
-    def account_withdrawal(self)->None|object: # Снятие денег
-
+    def account_withdrawal(self)->None|str: # Снятие денег
         print(f'Вашь баланс на данный момент состовляет {self.summa}')
         if self.summa > 5_000_000:
             self.percent = self.TAX 
@@ -99,10 +97,15 @@ class Bank:
                             
         
     def get_operation(self):
-        print('хуй')
+        print(self._operation)
         return self._operation
-          
-test = Bank()
-# test.choice()
-test.account_replenishment()
-test.get_operation()
+    
+
+
+if __name__ == '__main__':        
+    test = Bank()
+    test.choice()
+    test.account_replenishment()
+    test.account_replenishment()
+    test.account_withdrawal()
+    test.get_operation()
